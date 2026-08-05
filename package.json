@@ -1,0 +1,14 @@
+{
+  "name": "adewale-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website with Python Flask backend (contact form API, admin dashboard)",
+  "main": "backend/app.py",
+  "scripts": {
+    "start": "py backend\\app.py",
+    "server": "py backend\\app.py",
+    "static": "npx --yes http-server . -p 8080 -c-1"
+  },
+  "keywords": ["portfolio", "personal-website", "flask", "html", "css", "javascript"],
+  "author": "Adehanloye Adewale",
+  "license": "MIT"
+}

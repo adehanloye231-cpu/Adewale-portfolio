@@ -1,0 +1,122 @@
+[
+  {
+    "id": "20260803113855653520",
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "Test Message from Portfolio",
+    "message": "Hello! This is a test message submitted through the portfolio contact form to verify everything is working correctly.",
+    "timestamp": "2026-08-03T11:38:55.653637",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.107.1 Chrome/142.0.7444.235 Electron/39.2.7 Safari/537.36"
+  },
+  {
+    "id": "20260802155559935035",
+    "name": "Adewale Test Visitor",
+    "email": "visitor-test@example.com",
+    "subject": "TEST: Does the portfolio contact form work?",
+    "message": "Hi Adewale!\n\nThis is a real test message submitted through your portfolio contact form at 08/02/2026 15:55:57.\n\nIf email notifications are working, you should see this in your Gmail inbox. Otherwise, it will still be saved in your /admin dashboard at http://localhost:5000/admin\n\n Sent automatically from the portfolio server",
+    "timestamp": "2026-08-02T15:55:59.935477",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.22621.6133"
+  },
+  {
+    "id": "20260802155121418071",
+    "name": "Adura",
+    "email": "adehanloye231@gmail.com",
+    "subject": "job",
+    "message": "nice work",
+    "timestamp": "2026-08-02T15:51:21.418178",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.107.1 Chrome/142.0.7444.235 Electron/39.2.7 Safari/537.36"
+  },
+  {
+    "id": "20260802153850062664",
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "Test Subject",
+    "message": "Hello World",
+    "timestamp": "2026-08-02T15:38:50.063377",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.22621.6133"
+  },
+  {
+    "id": "20260731144439113176",
+    "name": "Adewale - Diagnostic Test",
+    "email": "diag@test.com",
+    "subject": "DIAG: Trying both 587 and 465 ports",
+    "message": "This submission will attempt to send email via port 587 STARTTLS first, then fall back to 465 SSL. If both fail, a detailed diagnosis will be printed in the server terminal.",
+    "timestamp": "2026-07-31T14:44:39.113233",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.22621.6133"
+  },
+  {
+    "id": "20260731143129326991",
+    "name": "Adewale Admin Test",
+    "email": "test@example.com",
+    "subject": "EMAIL TEST - Check Your Gmail Inbox NOW",
+    "message": "Hello Adewale! This is a test email from your portfolio contact form. If you can read this, your contact form email notifications are WORKING PERFECTLY. All future submissions will arrive directly in your Gmail inbox. Reply-to email will be set to the actual visitor's address. Congratulations on setting this up! - Your Portfolio Backend",
+    "timestamp": "2026-07-31T14:31:29.327047",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.22621.6133"
+  },
+  {
+    "id": "20260731125804416093",
+    "name": "Email Test User",
+    "email": "visitor@test.com",
+    "subject": "Check Gmail notification",
+    "message": "This message is to verify email delivery works after App Password is configured.",
+    "timestamp": "2026-07-31T12:58:04.416151",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.22621.6133"
+  },
+  {
+    "id": "20260731120522692237",
+    "name": "adura",
+    "email": "adehanloye231@gmail.com",
+    "subject": "job",
+    "message": "job needed",
+    "timestamp": "2026-07-31T12:05:22.692274",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.107.1 Chrome/142.0.7444.235 Electron/39.2.7 Safari/537.36"
+  },
+  {
+    "id": "20260731005210684143",
+    "name": "Adehanloye",
+    "email": "adehanloye231@gmail.com",
+    "subject": "job enquring",
+    "message": "i have a job for you",
+    "timestamp": "2026-07-31T00:52:10.684170",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.107.1 Chrome/142.0.7444.235 Electron/39.2.7 Safari/537.36"
+  },
+  {
+    "id": "20260731005009718482",
+    "name": "Adewale Test",
+    "email": "user@example.com",
+    "subject": "EMAIL TEST - Check Inbox",
+    "message": "This is a test submission. If email was configured properly, a notification would arrive at adehanloyemail@gmail.com",
+    "timestamp": "2026-07-31T00:50:09.718515",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.22621.6133"
+  },
+  {
+    "id": "20260731004535638976",
+    "name": "adehanloye",
+    "email": "adehanloye231@gmail.com",
+    "subject": "i have a job for you",
+    "message": "text this number",
+    "timestamp": "2026-07-31T00:45:35.639013",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.107.1 Chrome/142.0.7444.235 Electron/39.2.7 Safari/537.36"
+  },
+  {
+    "id": "20260731004338442478",
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "Test Subject",
+    "message": "Hello, this is a test message from the contact form!",
+    "timestamp": "2026-07-31T00:43:38.442533",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.22621.6133"
+  }
+]
