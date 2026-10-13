@@ -1,0 +1,68 @@
+
+# ============================================================
+#  ADEWALE PORTFOLIO — .gitignore
+#  Safe for public GitHub repositories.
+# ============================================================
+
+# ---------- ENVIRONMENT & SECRETS ----------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ---------- PYTHON ARTIFACTS ----------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
+.eggs/
+*.manifest
+*.spec
+
+# ---------- VIRTUAL ENVIRONMENTS ----------
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ---------- PIP & SETUPTOOLS CACHE ----------
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+
+# ---------- PROJECT-SPECIFIC: USER-DATA & DATABASE FILES ----------
+backend/data/*.json
+!backend/data/.gitkeep
+
+# ---------- IDE / EDITOR ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---------- NODE / NPM ----------
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---------- FLASK / WSGI ----------
+instance/
+.webassets-cache
+*.pid
