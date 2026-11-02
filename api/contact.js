@@ -97,7 +97,7 @@ module.exports = async function handler(req, res) {
     process.env.RESEND_TO_EMAIL ||
     process.env.RECEIVER_EMAIL ||
     process.env.ADEWALE_GMAIL_ADDRESS ||
-    'adehanloyemail@gmail.com'
+    'adehanloye231@gmail.com'
   ).trim();
 
   // Resend provides "onboarding@resend.dev" for free tier testing before domain verification.
@@ -118,7 +118,7 @@ module.exports = async function handler(req, res) {
   const safeSubject = escapeHtml(subject);
   const safeMessage = escapeHtml(message);
 
-  const emailSubject = `[PORTFOLIO CONTACT] ${subject.slice(0, 50)} - from ${name}`;
+  const emailSubject = `Portfolio Message from ${name}: ${subject.slice(0, 50)}`;
 
   const htmlBody = `<!DOCTYPE html>
 <html>
@@ -234,3 +234,4 @@ Reply directly by emailing: ${email}`;
     });
   }
 };
+

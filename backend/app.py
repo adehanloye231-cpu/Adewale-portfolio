@@ -203,7 +203,7 @@ def try_send_resend(submission):
         ).strip()
 
         short_sub = submission["subject"] if len(submission["subject"]) < 50 else submission["subject"][:50] + "..."
-        subject = f"{getattr(email_config, 'EMAIL_SUBJECT_PREFIX', '[PORTFOLIO CONTACT]')} {short_sub} - from {submission['name']}"
+        subject = f"Portfolio Message from {submission['name']}: {short_sub}"
 
         html_body = build_email_html(submission)
         text_body = (
