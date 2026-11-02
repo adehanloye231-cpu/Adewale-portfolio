@@ -1,0 +1,16 @@
+{
+  "name": "Adehanloye Adewale | Portfolio",
+  "short_name": "Adewale",
+  "description": "Official Portfolio of Adehanloye Adewale - Creative Web Developer and Python Programmer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d17",
+  "theme_color": "#090d17",
+  "icons": [
+    {
+      "src": "/images/logo_img.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}

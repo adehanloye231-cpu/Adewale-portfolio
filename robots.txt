@@ -1,0 +1,13 @@
+# robots.txt for Adehanloye Adewale Portfolio
+# https://adewale-portfolio.vercel.app
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /backend/
+
+# Host
+Host: https://adewale-portfolio.vercel.app
+
+# Sitemaps
+Sitemap: https://adewale-portfolio.vercel.app/sitemap.xml
