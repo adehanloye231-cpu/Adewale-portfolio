@@ -502,17 +502,14 @@ if (contactForm) {
         } catch (err) {
 
             console.error("Contact API error:", err);
-            success.innerHTML = "🌐 Your message is saved locally! (Server connection unavailable)";
-            success.style.color = "#ffaa00";
+            success.innerHTML = "❌ Could not send message. Please check your internet connection or email directly at adehanloyemail@gmail.com";
+            success.style.color = "#ff4444";
             success.style.marginTop = "20px";
             success.style.fontWeight = "600";
             success.style.textAlign = "center";
 
-            contactForm.reset();
-
             setTimeout(() => {
                 success.innerHTML = "";
-                inputs.forEach(input => { input.style.border = ""; });
             }, 7000);
 
         } finally {

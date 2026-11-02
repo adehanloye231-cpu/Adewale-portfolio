@@ -43,6 +43,23 @@ DATA_DIR = BASE_DIR / "data"
 DATA_FILE = DATA_DIR / "contact_submissions.json"
 
 import os as _os_app
+
+# Load .env file if present
+_env_file = FRONTEND_DIR / ".env"
+if _env_file.exists():
+    try:
+        with open(_env_file, "r", encoding="utf-8") as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if _line and not _line.startswith("#") and "=" in _line:
+                    _k, _v = _line.split("=", 1)
+                    _k = _k.strip()
+                    _v = _v.strip().strip('"\'')
+                    if _k and _k not in _os_app.environ:
+                        _os_app.environ[_k] = _v
+    except Exception:
+        pass
+
 _DEFAULT_ADMIN_PASSWORD = "admin123"
 ADMIN_PASSWORD_ENV_RAW = _os_app.environ.get("ADEWALE_ADMIN_PASSWORD", "")
 if isinstance(ADMIN_PASSWORD_ENV_RAW, str) and ADMIN_PASSWORD_ENV_RAW.strip() != "":
@@ -153,6 +170,87 @@ def build_email_html(submission):
         "<div class=\"footer\">Submission ID: <code>" + escaped_id + "</code><br>A copy of this message is also stored in your admin dashboard at /admin</div>"
         "</div></body></html>"
     )
+
+
+def is_resend_configured():
+    if email_config is None:
+        return False
+    key = getattr(email_config, "RESEND_API_KEY", "") or _os_app.environ.get("RESEND_API_KEY", "")
+    return bool(key and str(key).strip().startswith("re_"))
+
+
+def try_send_resend(submission):
+    try:
+        api_key = (
+            getattr(email_config, "RESEND_API_KEY", "")
+            or _os_app.environ.get("RESEND_API_KEY", "")
+        ).strip()
+        if not api_key:
+            return False
+
+        to_email = (
+            getattr(email_config, "RESEND_TO_EMAIL", "")
+            or getattr(email_config, "YOUR_EMAIL_ADDRESS", "")
+            or _os_app.environ.get("RESEND_TO_EMAIL", "")
+            or _os_app.environ.get("ADEWALE_GMAIL_ADDRESS", "")
+            or "adehanloyemail@gmail.com"
+        ).strip()
+
+        from_email = (
+            getattr(email_config, "RESEND_FROM_EMAIL", "")
+            or _os_app.environ.get("RESEND_FROM_EMAIL", "")
+            or "Portfolio Contact <onboarding@resend.dev>"
+        ).strip()
+
+        short_sub = submission["subject"] if len(submission["subject"]) < 50 else submission["subject"][:50] + "..."
+        subject = f"{getattr(email_config, 'EMAIL_SUBJECT_PREFIX', '[PORTFOLIO CONTACT]')} {short_sub} - from {submission['name']}"
+
+        html_body = build_email_html(submission)
+        text_body = (
+            "New portfolio contact message!\n\n"
+            f"Name: {submission['name']}\n"
+            f"Email: {submission['email']}\n"
+            f"Subject: {submission['subject']}\n"
+            f"Time: {submission['timestamp']}\n"
+            f"IP: {submission.get('ip_address', 'N/A')}\n\n"
+            f"--- MESSAGE ---\n{submission['message']}\n"
+        )
+
+        payload = json.dumps({
+            "from": from_email,
+            "to": [to_email],
+            "reply_to": submission["email"],
+            "subject": subject,
+            "html": html_body,
+            "text": text_body
+        }).encode("utf-8")
+
+        req = urllib.request.Request(
+            "https://api.resend.com/emails",
+            data=payload,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "User-Agent": "AdewalePortfolio/1.0"
+            },
+            method="POST"
+        )
+
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            resp_body = resp.read().decode("utf-8", errors="replace")
+            if 200 <= resp.status < 300:
+                print(f"[EMAIL] RESEND SUCCESS: Notification sent to {to_email}")
+                return True
+            else:
+                print(f"[EMAIL] RESEND FAILED status {resp.status}: {resp_body[:300]}")
+                return False
+    except urllib.error.HTTPError as e:
+        err_msg = e.read().decode("utf-8", errors="replace") if hasattr(e, "read") else str(e)
+        print(f"[EMAIL] RESEND HTTP {e.code} ERROR: {err_msg[:400]}")
+        return False
+    except Exception as e:
+        print(f"[EMAIL] RESEND ERROR: {type(e).__name__}: {str(e)[:300]}")
+        return False
 
 
 def is_formspree_configured():
@@ -298,6 +396,14 @@ def try_send_smtp(submission):
 
 
 def send_contact_email(submission):
+    # 1. Try Resend FIRST (recommended modern API for Vercel & cloud)
+    if is_resend_configured():
+        print("[EMAIL] Attempting to send notification via Resend...")
+        if try_send_resend(submission):
+            return True
+        print("[EMAIL] Resend attempt failed. Checking fallbacks...")
+
+    # 2. Try Gmail SMTP
     smtp_ok = False
     if is_email_configured():
         pw = email_config.EMAIL_APP_PASSWORD
@@ -313,14 +419,15 @@ def send_contact_email(submission):
     if smtp_ok:
         return True
 
+    # 3. Try Formspree fallback
     if is_formspree_configured():
         print("[EMAIL] Falling back to Formspree...")
         return try_send_formspree(submission)
 
     print("[EMAIL] No email delivery method succeeded.")
     print("        Messages are still being saved to the database (see /admin dashboard).")
-    print("        Fix Gmail SMTP by setting ADEWALE_GMAIL_APP_PASSWORD in the .env file,")
-    print("        or add ADEWALE_FORMSPREE_FORM_ID in .env for the Formspree fallback.")
+    print("        Add RESEND_API_KEY in .env or Vercel Environment Variables,")
+    print("        or fix Gmail SMTP by setting ADEWALE_GMAIL_APP_PASSWORD in .env.")
     return False
 
 
@@ -650,16 +757,17 @@ if __name__ == "__main__":
     print("  Data file:  " + str(DATA_FILE))
     print(_admin_pw_line)
 
-    if is_email_configured():
+    if is_resend_configured():
+        to_addr = getattr(email_config, "RESEND_TO_EMAIL", None) or "adehanloyemail@gmail.com"
+        print("  Email:      READY (Resend API) -> " + str(to_addr))
+    elif is_email_configured():
         pw = email_config.EMAIL_APP_PASSWORD
         if looks_like_app_password(pw):
-            print("  Email:      READY -> " + str(email_config.YOUR_EMAIL_ADDRESS))
+            print("  Email:      READY (Gmail SMTP) -> " + str(email_config.YOUR_EMAIL_ADDRESS))
         else:
-            print("  Email:      INVALID App Password format! Needs 16 letters.")
-            print("              Set ADEWALE_GMAIL_APP_PASSWORD in the .env file.")
-            print("              Create one: https://myaccount.google.com/apppasswords")
+            print("  Email:      INVALID Gmail App Password! (Consider using RESEND_API_KEY instead)")
     else:
-        print("  Email:      NOT CONFIGURED (set ADEWALE_GMAIL_* vars in .env)")
+        print("  Email:      NOT CONFIGURED (set RESEND_API_KEY in .env or Vercel)")
     print("=" * 60)
     print()
     app.run(host="0.0.0.0", port=PORT, debug=False)
